@@ -18,7 +18,7 @@ def un_zip(file_name):
     zip_file = zipfile.ZipFile(file_name)  # get unzipped file
     # write the unzipped file in the original folder
     if os.path.isdir(file_name.replace(".zip", "")):
-        pass
+        pass  # if there's already such a directory, pass
     else:
         os.mkdir(file_name.replace(".zip", ""))
     for names in zip_file.namelist():
