@@ -6,6 +6,7 @@ Read multiple large files in chunks, user can then process them in chunks, and g
 import os
 from os import listdir
 from os.path import isdir, isfile, join, splitext
+import pandas as pd
 
 
 def get_file_extensions(*paths) -> 'set':
@@ -35,3 +36,29 @@ def get_file_extensions(*paths) -> 'set':
     # Collect all kinds of file extensions into a set.
     fileExtensions = {splitext(filePath)[1] for filePath in filePaths}
     return fileExtensions
+
+
+def read_file(filePath, fileExtension):
+    """Read file in chunks.
+    filePath: str; path to a single file.
+    fileExtension: str; extension to a file. 
+    """
+    # CSV file
+    if fileExtension == '.csv':
+        #TODO: check the best chunksize
+        for chunk in pd.read_csv(filePath,
+                                 chunksize=100000,
+                                 low_memory=False,
+                                 encoding='utf-8'):
+            pass
+            # Process a chunk.
+
+    # JSON file
+    elif fileExtension == '.json':
+        #TODO: check the best way to read_json
+        for chunk in pd.read_json(filePath, chunksize=100000,
+                                  encoding='utf-8'):
+            pass
+            # Process a chunk.
+
+    # Pickle file
