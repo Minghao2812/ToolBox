@@ -9,10 +9,11 @@ from os.path import isdir, isfile, join, splitext
 import pandas as pd
 
 
-def get_file_extensions(*paths) -> 'set':
+def get_file_extensions(*paths, keyword='') -> 'set':
     """
     # Arguments
     paths: tuple[str]; path to folders or single files.
+    keyword: str; 
     # Return
     fileExtensions: set[str]; file extensions (e.g. .csv, .json)
     """
@@ -50,7 +51,7 @@ def read_file(filePath, fileExtension):
                                  chunksize=100000,
                                  low_memory=False,
                                  encoding='utf-8'):
-            pass
+            yield chunk
             # Process a chunk.
 
     # JSON file
@@ -58,7 +59,7 @@ def read_file(filePath, fileExtension):
         #TODO: check the best way to read_json
         for chunk in pd.read_json(filePath, chunksize=100000,
                                   encoding='utf-8'):
-            pass
+            yield chunk
             # Process a chunk.
 
     # Pickle file
